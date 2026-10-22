@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prince Enterprise | Household products</title>
+<meta name="description" content="Household products for the kitchen, home and bath. See new arrivals and what is in stock.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f1f4f1; --surface: #ffffff; --surface-2: #e8eeea; --ink: #15231e; --muted: #5a6b64; --line: #d6dfd9;
+  --accent: #0a6b50; --accent-ink: #ffffff; --new: #8a5d00; --new-bg: #fbefc9; --low: #a65a00; --low-bg: #fde6c8;
+  --out: #8a3a2e; --out-bg: #f6dcd6;
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #0f1613; --surface: #17211d; --surface-2: #1f2b26; --ink: #e7efea; --muted: #94a69d; --line: #2b3a34;
+    --accent: #45c79c; --accent-ink: #07231a; --new: #f0b93a; --new-bg: #3a2f10; --low: #f0a24a; --low-bg: #3b2a12;
+    --out: #e58f80; --out-bg: #3a1f1a;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font-body);
+  padding-block: 20px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1080px; margin: 0 auto; display: grid; gap: 18px; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+.mast { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 24px; padding-bottom: 14px; border-bottom: 2px solid var(--ink); }
+.mast h1 { margin: 0; font: 800 clamp(30px, 6vw, 48px)/1 var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
+.mast p { margin: 6px 0 0; color: var(--muted); }
+.stamp { font-size: 13px; color: var(--muted); text-align: right; }
+.stamp b { color: var(--ink); font-weight: 600; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tab { display: inline-flex; align-items: baseline; gap: 8px; padding: 10px 16px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--surface); font-weight: 600; }
+.tab .n { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 500; }
+.tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.tab[aria-selected="true"] .n { color: var(--bg); opacity: .75; }
+
+.summary { display: flex; flex-wrap: wrap; gap: 6px 22px; color: var(--muted); font-size: 14px; }
+.summary b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+.bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.bar .grow { flex: 1 1 220px; min-width: 0; }
+.input { width: 100%; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); min-width: 0; }
+.chip { padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); font-size: 14px; }
+.chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+
+.btn { padding: 10px 16px; border-radius: 8px; border: 1.5px solid var(--ink); background: var(--surface); font-weight: 600; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.small { padding: 7px 12px; font-size: 14px; }
+.btn.danger { border-color: var(--out); color: var(--out); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.linkbtn { background: none; border: 0; padding: 6px 0; color: var(--muted); font-size: 13px; text-decoration: underline; }
+
+.owner { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; padding: 12px 14px; border-radius: 10px; background: var(--surface-2); }
+.owner .msg { color: var(--muted); font-size: 14px; flex: 1 1 200px; }
+.owner .money { font-variant-numeric: tabular-nums; font-size: 14px; }
+.banner { padding: 10px 14px; border: 1px dashed var(--line); border-radius: 8px; background: var(--surface); color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card.gone .pic { filter: grayscale(1); opacity: .6; }
+.pic { aspect-ratio: 4 / 3; background: var(--surface-2); position: relative; display: grid; place-items: center; overflow: hidden; }
+.pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pic .ini { font: 800 56px/1 var(--font-display); color: var(--line); letter-spacing: -0.03em; }
+.tag { position: absolute; top: 10px; left: 10px; padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.tag.new { background: var(--new-bg); color: var(--new); }
+.tag.out { background: var(--out-bg); color: var(--out); }
+.tag.low { background: var(--low-bg); color: var(--low); }
+.info { padding: 12px 14px 14px; display: grid; gap: 8px; flex: 1; align-content: start; }
+.cat { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.name { font: 700 17px/1.25 var(--font-display); margin: 0; overflow-wrap: anywhere; }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.price { font: 700 20px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.price small { font: 500 12px var(--font-body); color: var(--muted); margin-right: 3px; }
+.left { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+.meter { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--accent); }
+.meter.low i { background: var(--low); }
+.meter.zero i { background: var(--out); }
+.act { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 4px; }
+.when { font-size: 12px; color: var(--muted); }
+.empty { padding: 40px 16px; text-align: center; color: var(--muted); border: 1.5px dashed var(--line); border-radius: 12px; display: grid; gap: 10px; justify-items: center; }
+.empty b { display: block; color: var(--ink); font: 700 18px var(--font-display); margin-bottom: 4px; }
+footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 13px; padding-top: 8px; border-top: 1px solid var(--line); }
+
+.veil { position: fixed; inset: 0; background: rgba(8, 14, 11, .6); display: grid; place-items: center; padding: 16px; z-index: 10; overflow-y: auto; }
+.dlg { width: min(100%, 460px); background: var(--surface); border-radius: 14px; padding: 20px; display: grid; gap: 14px; max-height: 100%; overflow-y: auto; }
+.dlg h2 { margin: 0; font: 800 22px var(--font-display); }
+.field { display: grid; gap: 5px; font-size: 14px; font-weight: 600; }
+.field span.hint { font-weight: 400; color: var(--muted); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.err { color: var(--out); font-size: 14px; min-height: 1em; }
+.foot { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }
+.foot .r { display: flex; gap: 8px; margin-left: auto; }
+.thumb { width: 72px; height: 54px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); }
+.photo { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+@media (prefers-reduced-motion: no-preference) { .meter i { transition: width .3s; } }
+@media (max-width: 420px) { .two { grid-template-columns: 1fr; } .stamp { text-align: left; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+(function () {
+  var CATS = ['Kitchen', 'Cleaning', 'Storage', 'Bedding & Bath', 'Appliances', 'Other'];
+  var NEW_DAYS = 14, LOW = 3;
+  var P = [], rev = 0, updated = null, loaded = false, loadErr = '';
+  var token = null;
+  try { token = sessionStorage.getItem('pe-token'); } catch (e) {}
+  var admin = false, custView = false, modal = null, loginOpen = false, loginErr = '', delArm = false;
+  var tab = 'new', q = '', cat = 'All', lowOnly = false, status = '';
+  var saveTimer = null, saving = false, dirty = false;
+  try { tab = localStorage.getItem('pe-tab') || 'new'; } catch (e) {}
+  if (['new', 'stock', 'sold'].indexOf(tab) < 0) tab = 'new';
+
+  var root = document.getElementById('root');
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function rem(p) { return p.remaining != null ? p.remaining : Math.max(0, p.stock - p.sold); }
+  function hasSold(p) { return p.hasSales != null ? p.hasSales : p.sold > 0; }
+  function money(n) { return Number(n).toLocaleString('en-GH', { maximumFractionDigits: 2 }); }
+  function ago(d) {
+    if (!d) return '';
+    var days = Math.floor((Date.now() - Date.parse(d)) / 864e5);
+    if (days <= 0) return 'today';
+    if (days === 1) return 'yesterday';
+    return days + ' days ago';
+  }
+  function isNew(p) { return Date.now() - Date.parse(p.added) <= NEW_DAYS * 864e5; }
+  function dayStr(n) { return new Date(Date.now() - n * 864e5).toISOString().slice(0, 10); }
+  function today() { return dayStr(0); }
+  function showAdmin() { return admin && !custView; }
+
+  function lists() {
+    var k = q.trim().toLowerCase();
+    function ok(p) { return (cat === 'All' || p.cat === cat) && (!k || (p.name + ' ' + p.cat).toLowerCase().indexOf(k) >= 0); }
+    var n = P.filter(isNew).sort(function (a, b) { return b.added.localeCompare(a.added); });
+    var s = P.filter(function (p) { return rem(p) > 0; }).sort(function (a, b) { return a.name.localeCompare(b.name); });
+    var d = P.filter(hasSold).sort(function (a, b) { return (b.lastSold || '').localeCompare(a.lastSold || ''); });
+    var cur = { new: n, stock: s, sold: d }[tab].filter(ok).filter(function (p) { return !(tab === 'stock' && lowOnly) || rem(p) <= LOW; });
+    return { n: n, s: s, d: d, shown: cur };
+  }
+
+  function card(p) {
+    var r = rem(p), pct = p.stock ? Math.round(r / p.stock * 100) : (r > 0 ? Math.min(100, r * 10) : 0);
+    if (p.remaining != null) pct = Math.min(100, r * 10);
+    var low = r > 0 && r <= LOW, gone = r === 0, adm = showAdmin();
+    var tag = gone ? '<span class="tag out">Sold out</span>' : (isNew(p) ? '<span class="tag new">New</span>' : (low ? '<span class="tag low">Only ' + r + ' left</span>' : ''));
+    var pic = p.img ? '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" loading="lazy">' : '<span class="ini" aria-hidden="true">' + esc(p.name.replace(/[^A-Za-z0-9]/g, '').slice(0, 2)) + '</span>';
+    var line;
+    if (adm) { pct = p.stock ? Math.round(r / p.stock * 100) : 0; line = tab === 'sold' ? p.sold + ' sold' + (gone ? '' : ', ' + r + ' left') : (gone ? 'None left' : r + ' of ' + p.stock + ' left'); }
+    else line = gone ? 'Sold out' : r + ' left';
+    var when = tab === 'new' ? 'Arrived ' + ago(p.added) : (tab === 'sold' && p.lastSold ? 'Last sale ' + ago(p.lastSold) : '');
+    var act = adm ? '<div class="act"><button class="btn small primary" data-act="sell" data-id="' + esc(p.id) + '"' + (gone ? ' disabled' : '') + '>Sell 1</button><button class="btn small" data-act="edit" data-id="' + esc(p.id) + '">Edit</button></div>' : '';
+    return '<article class="card' + (gone ? ' gone' : '') + '"><div class="pic">' + pic + tag + '</div><div class="info">' +
+      '<span class="cat">' + esc(p.cat) + '</span><h3 class="name">' + esc(p.name) + '</h3>' +
+      '<div class="row"><span class="price"><small>GH₵</small>' + money(p.price) + '</span><span class="left">' + line + '</span></div>' +
+      '<div class="meter' + (low ? ' low' : '') + (gone ? ' zero' : '') + '"><i style="width:' + pct + '%"></i></div>' +
+      (when ? '<span class="when">' + when + '</span>' : '') + act + '</div></article>';
+  }
+
+  var EMPTY = {
+    new: ['No new arrivals right now', 'Products added in the last ' + NEW_DAYS + ' days show up here.'],
+    stock: ['Nothing matches', 'Try another search or category.'],
+    sold: ['Nothing sold yet', 'Products appear here once they are sold.']
+  };
+
+  function render() {
+    var h = '<div class="wrap">';
+    h += '<header class="mast"><div><h1>Prince Enterprise</h1><p>Household products for the kitchen, home and bath.</p></div>' +
+      (updated ? '<div class="stamp">Stock list updated <b>' + ago(updated) + '</b></div>' : '') + '</header>';
+    if (admin) {
+      var adm = showAdmin();
+      var shelf = P.reduce(function (a, p) { return a + rem(p) * p.price; }, 0);
+      var rev$ = P.reduce(function (a, p) { return a + (p.sold || 0) * p.price; }, 0);
+      h += '<div class="owner"><button class="btn primary" data-act="add">Add product</button>' +
+        '<label class="chip"><input type="checkbox" id="custview" data-act="cust"' + (custView ? ' checked' : '') + '> Customer view</label>' +
+        '<span class="msg" role="status" aria-live="polite">' + esc(status) + '</span>' +
+        (adm ? '<span class="money">Shelf value <b>GH₵ ' + money(shelf) + '</b> · Sales <b>GH₵ ' + money(rev$) + '</b></span>' : '') +
+        '<button class="btn small" data-act="logout">Sign out</button></div>';
+      if (adm && P.some(function (p) { return p.ex; })) h += '<div class="banner"><span>Some products are samples for testing.</span><button class="btn small" data-act="clear">Remove samples</button></div>';
+    }
+    if (!loaded) h += '<div class="empty"><b>Loading products</b></div>';
+    else if (loadErr) h += '<div class="empty"><b>Could not load products</b>' + esc(loadErr) + '</div>';
+    else if (!P.length) {
+      h += '<div class="empty"><b>' + (admin ? 'No products yet' : 'Our product list is being set up') + '</b>' + (admin ? 'Add your first product, or load samples to try the portal.' : 'Please check back soon.') +
+        (admin ? '<button class="btn" data-act="samples">Load sample products</button>' : '') + '</div>';
+    } else {
+      var L = lists();
+      var units = L.s.reduce(function (a, p) { return a + rem(p); }, 0);
+      var soldU = P.reduce(function (a, p) { return a + (p.sold || 0); }, 0);
+      h += '<div class="tabs" role="tablist" aria-label="Product views">' +
+        [['new', 'New arrivals', L.n.length], ['stock', 'In stock', L.s.length], ['sold', 'Sold', L.d.length]].map(function (t) {
+          return '<button class="tab" role="tab" data-act="tab" data-tab="' + t[0] + '" aria-selected="' + (tab === t[0]) + '">' + t[1] + ' <span class="n">' + t[2] + '</span></button>';
+        }).join('') + '</div>';
+      h += '<div class="summary"><span><b>' + units + '</b> units left on the shelf</span>' + (showAdmin() ? '<span><b>' + soldU + '</b> units sold</span>' : '') + '<span><b>' + P.length + '</b> products listed</span></div>';
+      h += '<div class="bar"><div class="grow"><input class="input" id="q" type="search" placeholder="Search products" value="' + esc(q) + '" aria-label="Search products"></div>' +
+        '<select class="input" id="cat" style="width:auto" aria-label="Category"><option>All</option>' + CATS.map(function (c) { return '<option' + (c === cat ? ' selected' : '') + '>' + esc(c) + '</option>'; }).join('') + '</select>' +
+        (tab === 'stock' ? '<button class="chip" data-act="low" aria-pressed="' + lowOnly + '">Running low</button>' : '') + '</div>';
+      if (L.shown.length) h += '<div class="grid">' + L.shown.map(card).join('') + '</div>';
+      else h += '<div class="empty"><b>' + EMPTY[tab][0] + '</b>' + EMPTY[tab][1] + '</div>';
+    }
+    h += '<footer><span>Prince Enterprise</span>' + (admin ? '' : '<button class="linkbtn" data-act="login">Admin sign in</button>') + '</footer></div>';
+    if (modal) h += dialog();
+    if (loginOpen) h += loginDialog();
+    var keep = document.activeElement && document.activeElement.id, pos = null;
+    if (keep === 'q') pos = document.activeElement.selectionStart;
+    root.innerHTML = h;
+    if (keep === 'q') { var el = document.getElementById('q'); if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (e) {} } }
+    if (modal && !modal.focused) { var f = document.getElementById('f-name'); if (f) { f.focus(); modal.focused = true; } }
+    if (loginOpen && !loginOpen.focused) { var pw = document.getElementById('l-pw'); if (pw) { pw.focus(); loginOpen = { focused: true }; } }
+  }
+
+  function loginDialog() {
+    return '<div class="veil" data-act="veil"><form class="dlg" id="lform" role="dialog" aria-modal="true" aria-label="Admin sign in"><h2>Admin sign in</h2>' +
+      '<label class="field">Password<input class="input" id="l-pw" type="password" autocomplete="current-password" required></label>' +
+      '<div class="err" role="alert">' + esc(loginErr) + '</div>' +
+      '<div class="foot"><div class="r"><button type="button" class="btn" data-act="cancel">Cancel</button><button type="submit" class="btn primary">Sign in</button></div></div></form></div>';
+  }
+
+  function dialog() {
+    var p = modal.p, isNewP = modal.isNew;
+    return '<div class="veil" data-act="veil"><form class="dlg" id="pform" role="dialog" aria-modal="true" aria-label="' + (isNewP ? 'Add product' : 'Edit product') + '">' +
+      '<h2>' + (isNewP ? 'Add a product' : 'Edit product') + '</h2>' +
+      '<label class="field">Product name<input class="input" id="f-name" value="' + esc(p.name) + '" maxlength="80" required></label>' +
+      '<div class="two"><label class="field">Category<select class="input" id="f-cat">' + CATS.map(function (c) { return '<option' + (c === p.cat ? ' selected' : '') + '>' + esc(c) + '</option>'; }).join('') + '</select></label>' +
+      '<label class="field">Price (GH₵)<input class="input" id="f-price" type="number" min="0" step="0.01" inputmode="decimal" value="' + esc(p.price) + '" required></label></div>' +
+      '<div class="two"><label class="field">Units received<input class="input" id="f-stock" type="number" min="0" step="1" inputmode="numeric" value="' + esc(p.stock) + '" required><span class="hint">Total brought in. Add more when you restock.</span></label>' +
+      '<label class="field">Units sold<input class="input" id="f-sold" type="number" min="0" step="1" inputmode="numeric" value="' + esc(p.sold) + '" required><span class="hint">Fix a mistake here.</span></label></div>' +
+      '<div class="field">Photo (optional)<div class="photo">' + (p.img ? '<img class="thumb" src="' + esc(p.img) + '" alt="">' : '') +
+      '<input id="f-img" type="file" accept="image/*">' + (p.img ? '<button type="button" class="btn small" data-act="rmimg">Remove photo</button>' : '') + '</div></div>' +
+      '<div class="err" id="f-err" role="alert"></div>' +
+      '<div class="foot">' + (isNewP ? '' : '<button type="button" class="btn danger" data-act="del">' + (delArm ? 'Tap again to delete' : 'Delete') + '</button>') +
+      '<div class="r"><button type="button" class="btn" data-act="cancel">Cancel</button><button type="submit" class="btn primary">Save</button></div></div></form></div>';
+  }
+
+  function resize(file) {
+    return new Promise(function (res, rej) {
+      var fr = new FileReader();
+      fr.onerror = function () { rej(new Error('Could not read the photo.')); };
+      fr.onload = function () {
+        var im = new Image();
+        im.onerror = function () { rej(new Error('That file is not a usable image.')); };
+        im.onload = function () {
+          var m = 520, k = Math.min(1, m / Math.max(im.width, im.height));
+          var c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+          c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+          res(c.toDataURL('image/jpeg', 0.72));
+        };
+        im.src = fr.result;
+      };
+      fr.readAsDataURL(file);
+    });
+  }
+
+  function authHeaders() { return { 'content-type': 'application/json', authorization: 'Bearer ' + token }; }
+
+  async function load() {
+    loadErr = '';
+    try {
+      if (token) {
+        var r = await fetch('/api/admin/products', { headers: authHeaders(), cache: 'no-store' });
+        if (r.ok) { var d = await r.json(); P = d.products || []; rev = d.rev || 0; updated = d.updated; admin = true; loaded = true; render(); return; }
+        if (r.status === 401) { token = null; admin = false; try { sessionStorage.removeItem('pe-token'); } catch (e) {} }
+      }
+      var r2 = await fetch('/api/products', { cache: 'no-store' });
+      if (!r2.ok) throw new Error('Server answered ' + r2.status + '.');
+      var d2 = await r2.json(); P = d2.products || []; updated = d2.updated; admin = false;
+    } catch (e) { loadErr = 'Check your connection and refresh the page.'; }
+    loaded = true; render();
+  }
+
+  function touch() { updated = new Date().toISOString(); status = 'Saving…'; render(); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 600); }
+
+  async function flush() {
+    if (saving) { dirty = true; return; }
+    saving = true;
+    try {
+      var r = await fetch('/api/admin/save', { method: 'POST', headers: authHeaders(), body: JSON.stringify({ rev: rev, products: P }) });
+      if (r.status === 401) { signOut('Your session ended. Sign in again.'); saving = false; return; }
+      if (r.status === 409) { saving = false; status = 'The list was changed elsewhere. Reloaded the latest.'; await load(); return; }
+      var d = await r.json().catch(function () { return {}; });
+      if (!r.ok) throw new Error(d.error || 'Save failed.');
+      rev = d.rev; updated = d.updated; status = 'Saved.';
+    } catch (e) { status = 'Not saved: ' + e.message; }
+    saving = false; render();
+    if (dirty) { dirty = false; touch(); }
+  }
+
+  function signOut(msg) {
+    token = null; admin = false; custView = false; modal = null; status = '';
+    try { sessionStorage.removeItem('pe-token'); } catch (e) {}
+    load().then(function () { if (msg) { loginErr = msg; loginOpen = true; render(); } });
+  }
+
+  function readForm() {
+    var p = modal.p, err = document.getElementById('f-err');
+    var name = document.getElementById('f-name').value.trim();
+    var price = parseFloat(document.getElementById('f-price').value);
+    var stock = parseInt(document.getElementById('f-stock').value, 10);
+    var sold = parseInt(document.getElementById('f-sold').value, 10);
+    if (!name) { err.textContent = 'Enter a product name.'; return null; }
+    if (!(price >= 0)) { err.textContent = 'Enter a price of 0 or more.'; return null; }
+    if (!(stock >= 0) || !(sold >= 0)) { err.textContent = 'Units must be whole numbers, 0 or more.'; return null; }
+    if (sold > stock) { err.textContent = 'Units sold cannot be more than units received (' + stock + ').'; return null; }
+    p.name = name; p.cat = document.getElementById('f-cat').value; p.price = price; p.stock = stock; p.sold = sold;
+    return p;
+  }
+  function readFormLoose() {
+    var g = function (i) { var el = document.getElementById(i); return el ? el.value : null; };
+    if (g('f-name') != null) { var p = modal.p; p.name = g('f-name'); p.cat = g('f-cat'); p.price = g('f-price'); p.stock = g('f-stock'); p.sold = g('f-sold'); }
+  }
+
+  function samples() {
+    var rows = [
+      ['Non-stick frying pan, 28cm', 'Kitchen', 120, 10, 4, 3, 1], ['Plastic storage basins, set of 3', 'Storage', 85, 15, 9, 2, 0],
+      ['Electric kettle, 1.7L', 'Appliances', 185, 6, 2, 5, 3], ['Stainless steel pot set', 'Kitchen', 340, 4, 4, 25, 4],
+      ['Broom and dustpan set', 'Cleaning', 45, 20, 11, 20, 1], ['Bucket with lid, 20L', 'Cleaning', 60, 12, 7, 14, 2],
+      ['Cotton bath towel', 'Bedding & Bath', 70, 14, 3, 1, 0], ['Bedsheet set, queen', 'Bedding & Bath', 220, 5, 1, 6, 5],
+      ['Dinner plates, set of 6', 'Kitchen', 95, 8, 8, 30, 6], ['Standing fan, 16 inch', 'Appliances', 410, 3, 1, 1, 1],
+      ['Laundry basket', 'Storage', 75, 9, 0, 0, 0], ['Vacuum flask, 1L', 'Kitchen', 110, 7, 5, 12, 3]
+    ];
+    return rows.map(function (r, i) { return { id: 's' + i + Date.now().toString(36), name: r[0], cat: r[1], price: r[2], stock: r[3], sold: r[4], img: '', added: dayStr(r[5]), lastSold: r[4] ? dayStr(r[6]) : '', ex: 1 }; });
+  }
+
+  root.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-act]');
+    if (!t) return;
+    var act = t.getAttribute('data-act'), id = t.getAttribute('data-id');
+    if (act === 'veil') { if (e.target === t) { modal = null; loginOpen = false; delArm = false; render(); } return; }
+    if (act === 'tab') { tab = t.getAttribute('data-tab'); lowOnly = false; try { localStorage.setItem('pe-tab', tab); } catch (x) {} render(); return; }
+    if (act === 'low') { lowOnly = !lowOnly; render(); return; }
+    if (act === 'login') { loginErr = ''; loginOpen = true; render(); return; }
+    if (act === 'logout') { signOut(); return; }
+    if (!admin) { if (act === 'cancel') { loginOpen = false; render(); } return; }
+    if (act === 'cust') { custView = t.checked; render(); return; }
+    if (act === 'sell') { var p = P.find(function (x) { return x.id === id; }); if (p && rem(p) > 0) { p.sold++; p.lastSold = today(); status = 'Sold 1 ' + p.name + '. ' + rem(p) + ' left.'; touch(); } return; }
+    if (act === 'add') { modal = { isNew: true, p: { id: 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), name: '', cat: 'Kitchen', price: '', stock: 1, sold: 0, added: today(), lastSold: '', img: '' } }; render(); return; }
+    if (act === 'edit') { var o = P.find(function (x) { return x.id === id; }); modal = { isNew: false, p: JSON.parse(JSON.stringify(o)) }; delArm = false; render(); return; }
+    if (act === 'cancel') { modal = null; loginOpen = false; delArm = false; render(); return; }
+    if (act === 'rmimg') { readFormLoose(); modal.p.img = ''; render(); return; }
+    if (act === 'del') {
+      if (!delArm) { delArm = true; render(); return; }
+      P = P.filter(function (x) { return x.id !== modal.p.id; });
+      modal = null; delArm = false; status = 'Product deleted.'; touch(); return;
+    }
+    if (act === 'clear') { P = P.filter(function (x) { return !x.ex; }); status = 'Sample products removed.'; touch(); return; }
+    if (act === 'samples') { P = P.concat(samples()); status = 'Sample products added.'; touch(); return; }
+  });
+
+  root.addEventListener('input', function (e) { if (e.target.id === 'q') { q = e.target.value; render(); } });
+  root.addEventListener('change', function (e) {
+    if (e.target.id === 'cat') { cat = e.target.value; render(); }
+    if (e.target.id === 'f-img' && e.target.files[0] && modal) {
+      readFormLoose();
+      resize(e.target.files[0]).then(function (d) { modal.p.img = d; render(); }, function (er) { document.getElementById('f-err').textContent = er.message; });
+    }
+  });
+  root.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (e.target.id === 'lform') {
+      var pw = document.getElementById('l-pw').value;
+      fetch('/api/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: pw }) })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (x) {
+          if (!x.ok) { loginErr = x.d.error || 'Could not sign in.'; loginOpen = true; render(); return; }
+          token = x.d.token; try { sessionStorage.setItem('pe-token', token); } catch (er) {}
+          loginOpen = false; loginErr = ''; load();
+        })
+        .catch(function () { loginErr = 'Could not reach the server.'; loginOpen = true; render(); });
+      return;
+    }
+    if (!modal || !admin) return;
+    var p = readForm(); if (!p) return;
+    var wasNew = modal.isNew;
+    delete p.ex;
+    if (wasNew) P.unshift(p);
+    else { var i = P.findIndex(function (x) { return x.id === p.id; }); if (i >= 0) P[i] = p; }
+    modal = null; delArm = false; status = (wasNew ? 'Added ' : 'Updated ') + p.name + '.'; touch();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && (modal || loginOpen)) { modal = null; loginOpen = false; delArm = false; render(); } });
+
+  render();
+  load();
+})();
+</script>
+</body>
+</html>

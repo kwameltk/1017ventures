@@ -1,0 +1,14 @@
+{
+  "name": "prince-enterprise-portal",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^23.11.0"
+  }
+}
