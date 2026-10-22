@@ -2,6 +2,26 @@
 
 Public page for customers, plus an admin sign-in for the shop owner.
 
+## Project structure
+
+```text
+.
+|-- public/
+|   `-- index.html          # Customer catalog and admin interface
+|-- netlify/
+|   `-- functions/
+|       `-- api.mjs         # Product API, sign-in, and persistence
+|-- netlify.toml            # Netlify publish and function settings
+|-- package.json            # Local development command and dependencies
+`-- README.md
+```
+
+Generated local files such as `node_modules/`, `.netlify/`, and `deno.lock` are not part of the project source.
+
+## Run locally
+
+Install dependencies with `npm install`, then start the site with `npm run dev`. Netlify Dev serves the site at `http://localhost:8888` and routes `/api/*` to the function.
+
 ## Deploy on Netlify
 Drag and drop does not run server code, so use one of these:
 1. GitHub: push this folder to a repo, then in Netlify choose Add new site > Import from Git. Build settings are read from netlify.toml.
