@@ -14,6 +14,7 @@
   --bg: #f1f4f1; --surface: #ffffff; --surface-2: #e8eeea; --ink: #15231e; --muted: #5a6b64; --line: #d6dfd9;
   --accent: #0a6b50; --accent-ink: #ffffff; --new: #8a5d00; --new-bg: #fbefc9; --low: #a65a00; --low-bg: #fde6c8;
   --out: #8a3a2e; --out-bg: #f6dcd6;
+  --wa: #147d52;
   --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
 }
@@ -33,15 +34,15 @@ body {
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-.wrap { max-width: 1080px; margin: 0 auto; display: grid; gap: 18px; }
+.wrap { max-width: 1160px; margin: 0 auto; display: grid; gap: 20px; }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 img { max-width: 100%; }
 [hidden] { display: none !important; }
 
-.mast { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 24px; padding-bottom: 14px; border-bottom: 2px solid var(--ink); }
-.mast h1 { margin: 0; font: 800 clamp(30px, 6vw, 48px)/1 var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
+.mast { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 24px; padding: 8px 0 18px; border-bottom: 2px solid var(--ink); }
+.mast h1 { margin: 0; font: 800 clamp(30px, 6vw, 48px)/1 var(--font-display); text-wrap: balance; }
 .mast p { margin: 6px 0 0; color: var(--muted); }
 .stamp { font-size: 13px; color: var(--muted); text-align: right; }
 .stamp b { color: var(--ink); font-weight: 600; }
@@ -73,8 +74,8 @@ img { max-width: 100%; }
 .owner .money { font-variant-numeric: tabular-nums; font-size: 14px; }
 .banner { padding: 10px 14px; border: 1px dashed var(--line); border-radius: 8px; background: var(--surface); color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 16px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 248px), 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
 .card.gone .pic { filter: grayscale(1); opacity: .6; }
 .pic { aspect-ratio: 4 / 3; background: var(--surface-2); position: relative; display: grid; place-items: center; overflow: hidden; }
 .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -84,6 +85,17 @@ img { max-width: 100%; }
 .tag.out { background: var(--out-bg); color: var(--out); }
 .tag.low { background: var(--low-bg); color: var(--low); }
 .info { padding: 12px 14px 14px; display: grid; gap: 8px; flex: 1; align-content: start; }
+.info .act { margin-top: auto; }
+.buy { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 4px; background: var(--wa); border-color: var(--wa); color: #fff; text-decoration: none; text-align: center; }
+.buy:hover { filter: brightness(.92); }
+.category-nav { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 6px; scrollbar-width: thin; }
+.category-nav .chip { flex: 0 0 auto; }
+.catalog-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 16px; }
+.catalog-head h2, .group-title { margin: 0; font: 700 22px/1.2 var(--font-display); }
+.catalog-head p { margin: 4px 0 0; color: var(--muted); }
+.group { display: grid; gap: 12px; }
+.group-title { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+.group-title small { color: var(--muted); font: 500 13px var(--font-body); }
 .cat { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .name { font: 700 17px/1.25 var(--font-display); margin: 0; overflow-wrap: anywhere; }
 .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
@@ -120,15 +132,16 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
 <script>
 (function () {
   var CATS = ['Kitchen', 'Cleaning', 'Storage', 'Bedding & Bath', 'Appliances', 'Other'];
+  var WA_PHONE = '233545748380';
   var NEW_DAYS = 14, LOW = 3;
   var P = [], rev = 0, updated = null, loaded = false, loadErr = '';
   var token = null;
   try { token = sessionStorage.getItem('pe-token'); } catch (e) {}
   var admin = false, custView = false, modal = null, loginOpen = false, loginErr = '', delArm = false;
-  var tab = 'new', q = '', cat = 'All', lowOnly = false, status = '';
+  var tab = 'stock', q = '', cat = 'All', lowOnly = false, status = '';
   var saveTimer = null, saving = false, dirty = false;
-  try { tab = localStorage.getItem('pe-tab') || 'new'; } catch (e) {}
-  if (['new', 'stock', 'sold'].indexOf(tab) < 0) tab = 'new';
+  try { tab = localStorage.getItem('pe-tab') || 'stock'; } catch (e) {}
+  if (['new', 'stock', 'sold'].indexOf(tab) < 0) tab = 'stock';
 
   var root = document.getElementById('root');
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -146,6 +159,10 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   function dayStr(n) { return new Date(Date.now() - n * 864e5).toISOString().slice(0, 10); }
   function today() { return dayStr(0); }
   function showAdmin() { return admin && !custView; }
+  function waLink(p) {
+    var message = 'Hello, I would like to buy ' + p.name + ' for GH₵ ' + money(p.price) + '. Is it available?';
+    return 'https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent(message);
+  }
 
   function lists() {
     var k = q.trim().toLowerCase();
@@ -165,9 +182,10 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     var pic = p.img ? '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" loading="lazy">' : '<span class="ini" aria-hidden="true">' + esc(p.name.replace(/[^A-Za-z0-9]/g, '').slice(0, 2)) + '</span>';
     var line;
     if (adm) { pct = p.stock ? Math.round(r / p.stock * 100) : 0; line = tab === 'sold' ? p.sold + ' sold' + (gone ? '' : ', ' + r + ' left') : (gone ? 'None left' : r + ' of ' + p.stock + ' left'); }
-    else line = gone ? 'Sold out' : r + ' left';
+    else line = gone ? 'Sold out' : r + ' left on shelf';
     var when = tab === 'new' ? 'Arrived ' + ago(p.added) : (tab === 'sold' && p.lastSold ? 'Last sale ' + ago(p.lastSold) : '');
-    var act = adm ? '<div class="act"><button class="btn small primary" data-act="sell" data-id="' + esc(p.id) + '"' + (gone ? ' disabled' : '') + '>Sell 1</button><button class="btn small" data-act="edit" data-id="' + esc(p.id) + '">Edit</button></div>' : '';
+    var act = adm ? '<div class="act"><button class="btn small primary" data-act="sell" data-id="' + esc(p.id) + '"' + (gone ? ' disabled' : '') + '>Sell 1</button><button class="btn small" data-act="edit" data-id="' + esc(p.id) + '">Edit</button></div>' :
+      '<a class="btn buy' + (gone ? ' disabled' : '') + '" href="' + (gone ? '#' : waLink(p)) + '"' + (gone ? ' aria-disabled="true" tabindex="-1"' : ' target="_blank" rel="noopener noreferrer"') + '>' + (gone ? 'Out of stock' : 'Buy on WhatsApp') + '</a>';
     return '<article class="card' + (gone ? ' gone' : '') + '"><div class="pic">' + pic + tag + '</div><div class="info">' +
       '<span class="cat">' + esc(p.cat) + '</span><h3 class="name">' + esc(p.name) + '</h3>' +
       '<div class="row"><span class="price"><small>GH₵</small>' + money(p.price) + '</span><span class="left">' + line + '</span></div>' +
@@ -201,7 +219,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     else if (!P.length) {
       h += '<div class="empty"><b>' + (admin ? 'No products yet' : 'Our product list is being set up') + '</b>' + (admin ? 'Add your first product, or load samples to try the portal.' : 'Please check back soon.') +
         (admin ? '<button class="btn" data-act="samples">Load sample products</button>' : '') + '</div>';
-    } else {
+    } else if (showAdmin()) {
       var L = lists();
       var units = L.s.reduce(function (a, p) { return a + rem(p); }, 0);
       var soldU = P.reduce(function (a, p) { return a + (p.sold || 0); }, 0);
@@ -215,6 +233,21 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
         (tab === 'stock' ? '<button class="chip" data-act="low" aria-pressed="' + lowOnly + '">Running low</button>' : '') + '</div>';
       if (L.shown.length) h += '<div class="grid">' + L.shown.map(card).join('') + '</div>';
       else h += '<div class="empty"><b>' + EMPTY[tab][0] + '</b>' + EMPTY[tab][1] + '</div>';
+    } else {
+      var available = P.filter(function (p) { return rem(p) > 0 && (cat === 'All' || p.cat === cat) && (!q.trim() || (p.name + ' ' + p.cat).toLowerCase().indexOf(q.trim().toLowerCase()) >= 0); });
+      var allAvailable = P.filter(function (p) { return rem(p) > 0; });
+      var totalUnits = allAvailable.reduce(function (a, p) { return a + rem(p); }, 0);
+      h += '<section class="catalog-head"><div><h2>Shop the catalogue</h2><p>' + available.length + ' products available · ' + totalUnits + ' units on the shelf</p></div></section>';
+      h += '<nav class="category-nav" aria-label="Product categories">' + ['All'].concat(CATS).map(function (c) {
+        var count = c === 'All' ? allAvailable.length : allAvailable.filter(function (p) { return p.cat === c; }).length;
+        return '<button class="chip" data-act="category" data-cat="' + esc(c) + '" aria-pressed="' + (cat === c) + '">' + esc(c) + ' <span class="n">' + count + '</span></button>';
+      }).join('') + '</nav>';
+      h += '<div class="bar"><div class="grow"><input class="input" id="q" type="search" placeholder="Search products" value="' + esc(q) + '" aria-label="Search products"></div></div>';
+      if (!available.length) h += '<div class="empty"><b>' + (allAvailable.length ? 'No products in this category' : 'Our product list is being set up') + '</b>' + (allAvailable.length ? 'Choose another category or search term.' : 'Please check back soon.') + '</div>';
+      else CATS.filter(function (c) { return cat === 'All' || cat === c; }).forEach(function (c) {
+        var products = available.filter(function (p) { return p.cat === c; });
+        if (products.length) h += '<section class="group"><h3 class="group-title">' + esc(c) + '<small>' + products.length + (products.length === 1 ? ' product' : ' products') + '</small></h3><div class="grid">' + products.map(card).join('') + '</div></section>';
+      });
     }
     h += '<footer><span>Prince Enterprise</span>' + (admin ? '' : '<button class="linkbtn" data-act="login">Admin sign in</button>') + '</footer></div>';
     if (modal) h += dialog();
@@ -345,6 +378,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     var act = t.getAttribute('data-act'), id = t.getAttribute('data-id');
     if (act === 'veil') { if (e.target === t) { modal = null; loginOpen = false; delArm = false; render(); } return; }
     if (act === 'tab') { tab = t.getAttribute('data-tab'); lowOnly = false; try { localStorage.setItem('pe-tab', tab); } catch (x) {} render(); return; }
+    if (act === 'category') { cat = t.getAttribute('data-cat'); render(); return; }
     if (act === 'low') { lowOnly = !lowOnly; render(); return; }
     if (act === 'login') { loginErr = ''; loginOpen = true; render(); return; }
     if (act === 'logout') { signOut(); return; }
